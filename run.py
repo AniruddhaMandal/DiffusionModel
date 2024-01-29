@@ -1,7 +1,4 @@
+import matplotlib.pyplot as plt 
+from data_loader import Animal_10
 import torch
 
-
-class DiffusionModel(torch.Module):
-    def __init__():
-        super.__init__()
-        pass
