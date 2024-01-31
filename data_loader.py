@@ -51,7 +51,7 @@ class Animal_10(Dataset):
         imgs = []
         for img_f in self.img_file[indices]:
             img_ = Image.open(img_f)
-            imgs.append(np.array(img_))
+            imgs.append(np.array(img_).transpose(2,0,1))
             img_.close()
             if self.transform:
                imgs = self.transform(imgs) 
