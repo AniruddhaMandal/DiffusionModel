@@ -3,6 +3,7 @@ import os
 import numpy as np
 from torch.utils.data import Dataset
 from PIL import Image
+import torch
 
 class CIFAR_100(Dataset):
     def __init__(self) -> None:
@@ -25,7 +26,7 @@ class CIFAR_100(Dataset):
 
 class Animal_10(Dataset):
     def __init__(self,transform=None) -> None:
-        self.file_path = "Data/Animals-10/raw-img"
+        self.file_path = "Data/Animals-10/clean-img"
         self.transform = transform
         self.labels = []
         self.img_file = []
@@ -41,19 +42,23 @@ class Animal_10(Dataset):
         label = self.labels[index]
         img_ = Image.open(self.img_file[index])
         img = np.array(img_)
+
+        # img should be of shape (3,H,W)
+        img = img.transpose((2,0,1))
         img_.close()
+
         if self.transform:
-            img = self.transform(img)
+            img = self.transform(img,dtype=torch.float)
         return img, label
 
-    def __getitems__(self,indices):
-        labels = self.labels[indices]
-        imgs = []
-        for img_f in self.img_file[indices]:
-            img_ = Image.open(img_f)
-            imgs.append(np.array(img_).transpose(2,0,1))
-            img_.close()
-            if self.transform:
-               imgs = self.transform(imgs) 
-        
-        return imgs, labels
+#    def __getitems__(self,indices):
+#        labels = self.labels[indices]
+#        imgs = []
+#        for img_f in self.img_file[indices]:
+#            img_ = Image.open(img_f)
+#            imgs.append(np.array(img_).transpose(2,0,1),)
+#            img_.close()
+#            if self.transform:
+#               imgs = self.transform(imgs) 
+#        
+#        return imgs, labels

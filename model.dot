@@ -1,0 +1,6 @@
+digraph {
+  fontname="JetBrainsMono-Medium";
+  concentrate=True;
+  node [shape=record];
+  1 [label="Input Image \n|{input:|output:}|{[(batch_size,300,224,3)]|[(batch_size,)]} "];
+}
